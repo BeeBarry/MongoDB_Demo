@@ -9,6 +9,8 @@ public class Courses
     [BsonRepresentationAttribute(BsonType.String)]
     
     public Guid Id { get; set; }
+    
+    public string Name { get; set; }
 
     public string Description { get; set; }
     
