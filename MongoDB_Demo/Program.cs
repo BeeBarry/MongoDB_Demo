@@ -20,11 +20,29 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Post
 app.MapPost("/course", async (Courses course) =>
 {
 
     var testDB = await db.AddCourse("Courses", course);
     return Results.Ok(testDB);
+});
+
+// Get
+
+app.MapGet("/courses", async () =>
+{
+    var courses = await db.GetAllCourses("Courses");
+    return Results.Ok(courses);
+});
+
+
+//Delete
+
+app.MapDelete("/course/{id}", async (Guid id) =>
+{
+    var course = await db.DeleteCourse("Courses", id);
+    return Results.Ok(course);
 });
 
 app.Run();

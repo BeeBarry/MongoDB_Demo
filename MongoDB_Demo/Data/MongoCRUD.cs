@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using MongoDB_Demo.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -25,10 +27,24 @@ public class MongoCRUD
     
     
     // Get all courses
+
+    public async Task<List<Courses>> GetAllCourses(string table)
+    {
+        var collection = db.GetCollection<Courses>(table);
+        var courses = await collection.AsQueryable().ToListAsync();
+        return courses;
+    }
     
     // Get course by id
     
     // Update course
     
     // Delete course
+
+    public async Task<string> DeleteCourse(string table, Guid id)
+    {
+        var collection = db.GetCollection<Courses>(table);
+        var course = await collection.DeleteOneAsync(x => x.Id == id);
+        return "Deleted course";
+    }
 }
