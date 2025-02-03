@@ -28,12 +28,30 @@ app.MapPost("/course", async (Courses course) =>
     return Results.Ok(testDB);
 });
 
-// Get
+// Get all
 
 app.MapGet("/courses", async () =>
 {
     var courses = await db.GetAllCourses("Courses");
     return Results.Ok(courses);
+});
+
+
+// Get by Id
+
+app.MapGet("/course/{id}", async (Guid id) =>
+{
+    var course = await db.GetCourseById("Courses", id);
+    return Results.Ok(course);
+});
+
+
+// Update
+
+app.MapPut("/course/{id}", async (Guid id, Courses updatedCourse) =>
+{
+    var course = await db.UpdateCourse("Courses", id, updatedCourse);
+    return Results.Ok(course);
 });
 
 

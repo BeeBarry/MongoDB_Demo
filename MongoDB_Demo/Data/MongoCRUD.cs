@@ -36,11 +36,25 @@ public class MongoCRUD
     }
     
     // Get course by id
+
+    public async Task<Courses> GetCourseById(string table, Guid id)
+    {
+        var collection = db.GetCollection<Courses>(table);
+        var course = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+        return course;
+    }
     
     // Update course
+
+    public async Task<Courses> UpdateCourse(string table, Guid id, Courses UpdatedCourse)
+    {
+        var collection = db.GetCollection<Courses>(table);
+        await collection.ReplaceOneAsync(x => x.Id == id, UpdatedCourse);
+        return UpdatedCourse;
+
+    }
     
     // Delete course
-
     public async Task<string> DeleteCourse(string table, Guid id)
     {
         var collection = db.GetCollection<Courses>(table);
